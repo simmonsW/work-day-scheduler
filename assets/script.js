@@ -22,52 +22,33 @@ for (var i = 0; i <= 8; i++) {
     ampm = 'am';
   }
 
-  // create rows
-  var $row = $('<div>');
-  $row.addClass('row');
-
-  // create timeCol
-  var $timeCol = $('<div>');
-  $timeCol.addClass('col-2');
+  // create row and append to container
+  var $row = $('<div>')
+    .addClass('row')
+    .appendTo($container);
 
   // create timeBlocks
-  var $hour = $('<div>');
-  $hour.addClass('hour col-1 d-flex justify-content-end align-items-center');
-  var $timeBlock = $('<div>');
-  $timeBlock.addClass('timeBlock text-center');
-  $timeBlock.text(showHour + ampm);
+  var $hour = $('<div>')
+    .addClass('hour col-1 d-flex justify-content-end align-items-center')
+    .appendTo($row);
+  var $timeBlock = $('<div>')
+    .addClass('timeBlock text-center')
+    .text(showHour + ampm)
+    .appendTo($hour);
 
-  // append
-  $row.append($hour);
-  $hour.append($timeBlock);
+  // create description and append to row
+  var $description = $('<div>')
+    .addClass('description past col-10')
+    .appendTo($row);
 
-  // create description
-  var $description = $('<div>');
-  $description.addClass('description past col-10');
+  // create textarea and append
+  var $textarea = $('textarea')
+    .appendTo($description);
 
-  // create textarea
-  var $textarea = $('textarea');
-
-  // append
-  $row.append($description);
-  $description.append($textarea);
-
-  // create saveBtn
-  var $saveBtn = $('<div>');
-  var $saveSpan = $('<span>');
-  $saveSpan.text('Save');
-
-  $saveBtn.addClass('saveBtn col-1 text-center d-flex justify-content-center align-items-center');
-  
-
-  // append
-  $row.append($saveBtn);
-  $saveBtn.append($saveSpan);
-
-  // append row to container
-  $container.append($row);
-  
-  console.log(showHour, ampm);
-  console.log(i);
+  // create saveBtn and append to row
+  var $saveBtn = $('<div>')
+    .text('Save')
+    .addClass('saveBtn col-1 text-center d-flex justify-content-center align-items-center')
+    .appendTo($row);
 }
 
