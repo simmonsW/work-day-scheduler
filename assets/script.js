@@ -10,8 +10,10 @@ $currentDay.text(now);
 
 // hourly planner build
 for (var i = 0; i <= 8; i++) {
+  // hour stores as 24H
   var hour = i + 9;
 
+  // showHour displays as 12H
   var showHour = 0;
   var ampm = '';
   if (hour > 12) {
@@ -21,6 +23,8 @@ for (var i = 0; i <= 8; i++) {
     showHour = hour;
     ampm = 'am';
   }
+
+  console.log(hour, showHour);
 
   // create row and append to container
   var $row = $('<div>')
@@ -50,5 +54,25 @@ for (var i = 0; i <= 8; i++) {
     .text('Save')
     .addClass('saveBtn col-1 text-center d-flex justify-content-center align-items-center')
     .appendTo($row);
+  
+  // update row color based on hour
+  rowColor($description, hour);
 }
 
+// set row color based on hour
+function rowColor($description, hour) {
+  // get current hour in 24H
+  var now24 = moment().format('H');
+  console.log(now24);
+
+  if (hour < now24) {
+    $description.addClass('past');
+    console.log('before');
+  } else if (hour > now24) {
+    $description.addClass('future');
+    console.log('after');
+  } else {
+    $description.addClass('present');
+    console.log('now');
+  }
+}
