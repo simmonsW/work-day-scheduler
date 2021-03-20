@@ -41,13 +41,9 @@ for (var i = 0; i <= 8; i++) {
     .appendTo($hour);
 
   // create description and append to row
-  var $description = $('<div>')
+  var $description = $('<textarea>')
     .addClass('description past col-10')
     .appendTo($row);
-
-  // create textarea and append
-  var $textarea = $('textarea')
-    .appendTo($description);
 
   // create saveBtn and append to row
   var $saveBtn = $('<div>')
