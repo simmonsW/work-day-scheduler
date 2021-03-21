@@ -8,6 +8,8 @@ console.log(now);
 var $currentDay = $('#currentDay');
 $currentDay.text(now);
 
+
+
 // hourly planner build
 for (var i = 0; i <= 8; i++) {
   // hour stores as 24H
@@ -42,12 +44,17 @@ for (var i = 0; i <= 8; i++) {
 
   // create description and append to row
   var $description = $('<textarea>')
+    .attr('hour', showHour + ampm)
+    .attr('id', `textarea-${i}`)
+    .attr('textarea-id', i)
     .addClass('description past col-10')
     .appendTo($row);
 
   // create saveBtn and append to row
-  var $saveBtn = $('<div>')
+  var $saveBtn = $('<btn>')
     .text('Save')
+    .attr('id', `save-${i}`)
+    .attr('save-id', i)
     .addClass('saveBtn col-1 text-center d-flex justify-content-center align-items-center')
     .appendTo($row);
   
@@ -72,3 +79,30 @@ function rowColor($description, hour) {
     console.log('now');
   }
 }
+
+$(document).on('click', 'btn', function() {
+  // get save-id/index value
+  var $index = $(this).attr('save-id');
+
+  // get textarea id attr value
+  var textareaId = '#textarea-' + $index;
+  
+  // get textarea text value
+  var $value = $(textareaId).val();
+
+  // remove warning class
+  $(this).removeClass('btn-danger');
+
+  console.log($index);
+  console.log(textareaId);
+  console.log($value);
+});
+
+$(document).on('change', 'textarea', function() {
+  // get textarea-id/index value
+  var $index = $(this).attr('textarea-id');
+  // get save btn id value
+  var saveId = '#save-' + $index;
+  // add warning class
+  $(saveId).addClass('btn-danger');
+});
