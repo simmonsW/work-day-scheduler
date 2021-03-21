@@ -1,4 +1,5 @@
 var $container = $('.container');
+var scheduleArr = {};
 
 // Get current day 
 var now = moment().format('dddd, MMMM Do');
@@ -8,7 +9,14 @@ console.log(now);
 var $currentDay = $('#currentDay');
 $currentDay.text(now);
 
+// load stored schedule
+var storedSchedule = JSON.parse(localStorage.getItem('storedSchedule'));
 
+if (!storedSchedule) {
+  console.log('nothing stored');
+} else {
+  scheduleArr = storedSchedule;
+}
 
 // hourly planner build
 for (var i = 0; i <= 8; i++) {
@@ -48,6 +56,7 @@ for (var i = 0; i <= 8; i++) {
     .attr('id', `textarea-${i}`)
     .attr('textarea-id', i)
     .addClass('description past col-10')
+    .val(scheduleArr[i])
     .appendTo($row);
 
   // create saveBtn and append to row
@@ -60,7 +69,7 @@ for (var i = 0; i <= 8; i++) {
   
   // update row color based on hour
   rowColor($description, hour);
-}
+};
 
 // set row color based on hour
 function rowColor($description, hour) {
@@ -78,7 +87,7 @@ function rowColor($description, hour) {
     $description.addClass('present');
     console.log('now');
   }
-}
+};
 
 $(document).on('click', 'btn', function() {
   // get save-id/index value
@@ -90,19 +99,24 @@ $(document).on('click', 'btn', function() {
   // get textarea text value
   var $value = $(textareaId).val();
 
+  // set new value
+  scheduleArr[$index] = $value;
+
   // remove warning class
   $(this).removeClass('btn-danger');
 
-  console.log($index);
-  console.log(textareaId);
-  console.log($value);
+  // store to local storage
+  localStorage.setItem('storedSchedule', JSON.stringify(scheduleArr));
 });
 
+// display warning to save new textarea value
 $(document).on('change', 'textarea', function() {
   // get textarea-id/index value
   var $index = $(this).attr('textarea-id');
+
   // get save btn id value
   var saveId = '#save-' + $index;
+
   // add warning class
   $(saveId).addClass('btn-danger');
 });
